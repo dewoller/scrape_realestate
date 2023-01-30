@@ -26,6 +26,11 @@ head(10) %>%
 		{ . } -> rv
 
 
+property %>%
+	head(2) %>%
+
+
+
 • built target property_url [0.081 seconds]
 ✔ skip branch property_6c266c4b
 ✔ skip branch property_9faf4d26

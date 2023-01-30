@@ -15,17 +15,18 @@ extract_pattern= "/sold/.*[0-9]{8}$"
 # create a tar_map structure that gets each of the first pages for each postcode
 
 library(RSelenium)
-
 remDr <- RSelenium::remoteDriver(
-  remoteServerAddr = "127.0.0.1",
-  port = 4445L
+	remoteServerAddr = "127.0.0.1",
+	port = 4444L,
+	extraCapabilities = list(chromeOptions = list( args = c('--incognito')))
 )
-remDr$open()
+a=remDr$open( )
+
 
 
 postcodes <- tibble(
-   postcode=c(4555,4556,4559,4561,4562,4560),
-   # postcode=c(4553),
+  postcode=c(4553, 4555,4556,4559,4561,4562,4560),
+  # postcode=c(4553),
   # postcode=c(4555),
 )
 
