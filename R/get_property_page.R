@@ -2,7 +2,8 @@ fs::dir_ls( '/etc/openvpn/nordvpn/ovpn_udp/', glob='*au*') %>%
 	c( fs::dir_ls( '/etc/openvpn/nordvpn/ovpn_tcp/', glob='*au*')) %>%
 	{ . } -> possible_vpn_clients
 
-property_page_cache = 'property_page_cache'
+property_page_cache = str_c( getwd() , '/property_page_cache/')
+property_page_archive = str_c( getwd() , '/property_page_cache/archive')
 
 get_property_page = function( property_url_df, remDr ) {
 
@@ -21,6 +22,11 @@ get_property_page = function( property_url_df, remDr ) {
 
   rv
 }
+################################################################################
+property_page_archive_filename = function( property_url) {
+  str_extract( property_url, '/[^/]*$') %>%
+    str_c(property_page_archive, ., '.html')
+}
 
 ################################################################################
 property_page_filename = function( property_url) {
@@ -30,9 +36,12 @@ property_page_filename = function( property_url) {
 
 ################################################################################
 property_page_exists = function( property_url) {
-  property_page_filename( property_url) %>%
-    fs::file_exists()
 
+exist_recent = property_page_filename( property_url) %>% fs::file_exists()
+
+exist_archive = property_page_archive_filename( property_url) %>% fs::file_exists()
+
+	exist_recent | exist_archive
 }
 
 if(FALSE)
