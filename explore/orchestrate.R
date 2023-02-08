@@ -61,9 +61,9 @@ navigate_to = function( url ) {
 	system(str_c( 'xdotool key Escape'))
 	system(str_c( 'xdotool key ctrl+l'))
 	Sys.sleep(1)
-	system(str_c( 'xdotool type "', url, '"'))
+	system(str_c( 'xdotool type "', url, ' "'))
 
-	Sys.sleep(1)
+	Sys.sleep(3)
 	system('xdotool key Return')
 
 }
