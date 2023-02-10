@@ -5,6 +5,7 @@ source("packages.R")
 
 invisible( list.files('R/', full.names = T, pattern = ".R") %>% lapply( source) )
 
+
 listing_page_url = 'https://www.realestate.com.au/sold/in-{postcode}/list-{page_number}?maxBeds=4&misc=ex-no-sale-price&activeSort=solddate'
 
 base_url= "https://www.realestate.com.au/sold"
@@ -36,6 +37,13 @@ dir_ls("property_page_cache/archive/", glob = "*.html") %>%
 
 ,
 
-write = df %>% write_csv( 'output/property_details3.csv')
+cleaned_df = clean_property_details(df),
+
+supplemented_df = supplement_property_details(cleaned_df),
+
+write = supplemented_df %>% write_csv( 'output/property_details4.csv'),
+
+write_qs = supplemented_df %>% qs::qsave( 'output/property_details4.qs'),
+
 
 )

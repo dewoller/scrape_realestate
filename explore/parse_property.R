@@ -31,4 +31,33 @@ property %>%
 
 rv
 
+library(tidytext)
+
+bigrams = 
+supplemented_df %>%
+select( url, description_f) %>%
+  unnest_tokens(bigram, description_f, token = "ngrams", n = 2)
+
+  bigrams %>% 
+  count( bigram, sort=TRUE) %>%
+  {.} -> bg_count
+
+data(stop_words)
+
+tidytext::stop_words  %>%
+  filter( lexicon=='SMART') %>%
+  {.} -> stopwords
+
+bg_count %>%
+separate( bigram, c('a','b'), sep=' '   ) %>%
+filter( !a %in% stopwords$word & !b %in% stopwords$word) %>%
+{.} -> bg_count_filtered
+
+
+e
+filter()
+  head(100) %>%
+  pull( n )
+
+
 
