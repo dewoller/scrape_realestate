@@ -6,4 +6,10 @@ library( purrr )
 library( glue )
 library(fs)
 library(rvest)
+library(tidytext)
+library(absmapsdata)
+
+library(readxl)
+library(sf)
+library(tidygeocoder)
 
