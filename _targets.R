@@ -127,8 +127,8 @@ select( url, seifa_decile = decile, seifa_score=score)
 
 ,
 
-final = supplemented_geocoded %>%
-left_join( sa1_seifa, by = "url") 
+final = supplemented_df %>%
+left_join( sa1_seifa, by = "url")  
 
 
 
@@ -162,7 +162,7 @@ left_join( sa1_seifa, by = "url")
    #
     ,
     #
-    write_forsale = final %>% qs::qsave("output/forsale.qs"),
+    write_forsale = supplemented_forsale %>% qs::qsave("output/forsale.qs"),
  
 
 
