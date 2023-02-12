@@ -7,3 +7,6 @@ head(10) %>%
 {.} -> df
 
 
+final %>%
+select( ends_with( 'pf')) %>%
+{.} -> final_pf

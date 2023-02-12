@@ -31,12 +31,23 @@ property %>%
 
 rv
 
-library(tidytext)
+	
+	%>%
+{ . } -> bigrams
 
 bigrams = 
 supplemented_df %>%
 select( url, description_f) %>%
   unnest_tokens(bigram, description_f, token = "ngrams", n = 2)
+
+trigrams = 
+supplemented_df %>%
+select( url, description_f) %>%
+  unnest_tokens(trigram, description_f, token = "ngrams", n = 3)
+
+  trigrams %>% 
+  count( trigram, sort=TRUE) %>%
+  {.} -> trg_count
 
   bigrams %>% 
   count( bigram, sort=TRUE) %>%
@@ -48,16 +59,47 @@ tidytext::stop_words  %>%
   filter( lexicon=='SMART') %>%
   {.} -> stopwords
 
+trg_count %>%
+separate( trigram, c('a','b', 'c'), sep=' ' , remove=FALSE  ) %>%
+filter( !a %in% stopwords$word & !b %in% stopwords$word & !c %in% stopwords$word) %>%
+{.} -> trg_count_filtered
+
 bg_count %>%
-separate( bigram, c('a','b'), sep=' '   ) %>%
+separate( bigram, c('a','b'), sep=' ' , remove=FALSE  ) %>%
 filter( !a %in% stopwords$word & !b %in% stopwords$word) %>%
 {.} -> bg_count_filtered
 
+bg_count_filtered %>%
+head(100)  %>%
+write_csv( 'bigram_count.csv')
 
-e
-filter()
-  head(100) %>%
-  pull( n )
+trg_count_filtered %>%
+head(100)  %>%
+write_csv( 'trigram_count.csv')
 
 
 
+
+
+
+quigrams = 
+supplemented_df %>%
+select( url, description_f) %>%
+  unnest_tokens(quigram, description_f, token = "ngrams", n = 4)
+
+  quigrams %>% 
+  count( quigram, sort=TRUE) %>%
+  {.} -> qug_count
+
+qug_count %>%
+separate( quigram, c('a','b', 'c', 'd'), sep=' ' , remove=FALSE  ) %>%
+filter( !a %in% stopwords$word & 
+!b %in% stopwords$word & 
+!c %in% stopwords$word &
+!d %in% stopwords$word
+) %>%
+{.} -> qug_count_filtered
+
+qug_count_filtered %>%
+head(100)  %>%
+write_csv( 'quigram_count.csv')

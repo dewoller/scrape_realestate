@@ -19,6 +19,7 @@ extract_pattern <- "/[^/]*$"
 #     pull( property_url )
 
 tar_plan(
+
     df =
         dir_ls("property_page_cache/archive/", glob = "*.html") %>%
             tibble(property_page = .) %>%
@@ -35,8 +36,6 @@ tar_plan(
     cleaned_df = clean_property_details(df),
     #
     supplemented_df = supplement_property_details(cleaned_df),
-    #
-    write = supplemented_df %>% write_csv("output/property_details4.csv"),
     #
     write_qs = final %>% qs::qsave("output/property_details5.qs"),
     #
